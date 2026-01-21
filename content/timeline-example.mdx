@@ -1,0 +1,48 @@
+import TimelineEntry from '@/components/TimelineEntry'
+import EmbedYouTube from '@/components/embeds/EmbedYouTube'
+import EmbedX from '@/components/embeds/EmbedX'
+import EmbedInstagram from '@/components/embeds/EmbedInstagram'
+
+# My Career Timeline
+
+This is an example of using MDX with React components directly.
+
+<TimelineEntry 
+  milestone={{
+    id: "mdx-example-1",
+    date: "January 2024",
+    sortDate: "2024-01-15",
+    title: "Example Using MDX Components",
+    description: "<p>This milestone is defined using MDX and React components directly!</p><p>You can write <strong>HTML</strong> or use <em>markdown</em> formatting.</p>",
+    tags: ["MDX", "React", "Next.js"],
+    media: []
+  }}
+/>
+
+<TimelineEntry 
+  milestone={{
+    id: "mdx-example-2",
+    date: "December 2023",
+    sortDate: "2023-12-01",
+    title: "Another MDX Example",
+    description: "<p>This shows how you can add multiple timeline entries using MDX components.</p>",
+    tags: ["Demo"],
+    media: []
+  }}
+/>
+
+## You can also embed media directly:
+
+<EmbedYouTube url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+
+<EmbedX url="https://x.com/example/status/123456789" />
+
+## Or write regular markdown content
+
+This is just regular markdown text. You can mix and match MDX components with markdown content.
+
+- Bullet points work
+- **Bold text** works
+- [Links](https://example.com) work
+
+You have full flexibility!

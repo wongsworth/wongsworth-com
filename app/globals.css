@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-black antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  a {
+    @apply underline hover:opacity-70 transition-opacity;
+  }
+  
+  /* Ensure list bullets and numbers are visible */
+  ul {
+    @apply list-disc ml-6;
+  }
+  
+  ol {
+    @apply list-decimal ml-6;
+  }
+  
+  li {
+    @apply mb-2;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}

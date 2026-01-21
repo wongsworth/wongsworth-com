@@ -1,0 +1,63 @@
+import TimelineItem from '@/components/TimelineItem'
+import EmbedYouTube from '@/components/embeds/EmbedYouTube'
+import EmbedX from '@/components/embeds/EmbedX'
+import EmbedInstagram from '@/components/embeds/EmbedInstagram'
+import Image from 'next/image'
+
+{/* This is an alternative way to write your timeline using MDX and React components */}
+
+<div className="relative">
+  <div className="absolute left-0 md:left-8 top-0 bottom-0 w-px bg-gray-300" aria-hidden="true" />
+  
+  <TimelineItem 
+    date="January 2024" 
+    title="Started New Role"
+    tags={["Career", "Growth"]}
+  >
+    This is my most recent milestone! I can write **markdown** here, including:
+    
+    - Bullet points
+    - **Bold** and *italic* text
+    - [Links to websites](https://example.com)
+    
+    And I can also embed media:
+    
+    <EmbedYouTube url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+  </TimelineItem>
+
+  <TimelineItem 
+    date="December 2023" 
+    title="Another Milestone"
+    tags={["Achievement"]}
+  >
+    Here's another entry. The beauty of MDX is that you can:
+    
+    1. Write natural markdown
+    2. Use React components inline
+    3. Mix and match as needed
+    
+    You can even use regular HTML tags like <strong>this</strong>.
+  </TimelineItem>
+
+  <TimelineItem 
+    date="Summer 2023" 
+    title="Conference Talk"
+  >
+    I gave a talk at a conference! Here's a photo:
+    
+    {/* Images need to be in public/images/ */}
+    <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-100 my-4">
+      <Image
+        src="/images/conference.jpg"
+        alt="Conference presentation"
+        fill
+        className="object-cover"
+      />
+    </div>
+    
+    And here's a related tweet:
+    
+    <EmbedX url="https://x.com/example/status/123456789" />
+  </TimelineItem>
+
+</div>

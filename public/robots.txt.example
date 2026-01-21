@@ -1,0 +1,15 @@
+# This is what your robots.txt will look like when generated.
+# The actual robots.txt is auto-generated from app/robots.ts
+# You don't need to edit this file - it's just an example!
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://wongsworth.com/sitemap.xml
+
+# To customize:
+# 1. Edit app/robots.ts
+# 2. Rebuild with: npm run build
+# 3. The generated version will be at /robots.txt

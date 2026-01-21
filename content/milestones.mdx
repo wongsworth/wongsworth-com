@@ -1,0 +1,83 @@
+---
+milestones:
+  - id: "example-1"
+    date: "January 2024"
+    sortDate: "2024-01-15"
+    title: "Example Milestone"
+    description: "<p>This is a placeholder milestone. Replace this with your actual career milestones.</p><p>You can use HTML tags for formatting like <strong>bold text</strong>, <em>italic text</em>, and <a href='https://example.com'>links</a>.</p>"
+    tags:
+      - "Example"
+      - "Placeholder"
+    media:
+      - type: "image"
+        src: "/images/placeholder.jpg"
+        alt: "Example image description"
+        caption: "Add your images to /public/images/ folder"
+  
+  - id: "example-2"
+    date: "December 2023"
+    sortDate: "2023-12-01"
+    title: "Another Example"
+    description: "<p>Another placeholder milestone showing the timeline structure.</p>"
+    tags:
+      - "Demo"
+---
+
+# Timeline Content
+
+This file contains all your career milestones. Edit the frontmatter above to add, remove, or modify entries.
+
+## How to Edit
+
+1. Each milestone is defined in the `milestones` array in the frontmatter (between the `---` markers)
+2. To add a new milestone, copy an existing one and modify the fields
+3. To remove a milestone, delete the entire entry
+4. The timeline will automatically sort by `sortDate` in reverse chronological order
+
+## Field Guide
+
+- **id**: Unique identifier (can be anything, like "job-google-2024")
+- **date**: Display date shown on timeline (e.g., "January 2024", "Summer 2023")
+- **sortDate**: ISO date for sorting (YYYY-MM-DD format)
+- **title**: Milestone title/headline
+- **description**: Rich HTML content (use paragraph tags, links, etc.)
+- **tags**: Optional array of tags/categories
+- **media**: Optional array of images, videos, or embeds
+
+### Media Types
+
+**Image:**
+```yaml
+- type: "image"
+  src: "/images/photo.jpg"
+  alt: "Description"
+  caption: "Optional caption"
+```
+
+**Local Video:**
+```yaml
+- type: "video"
+  src: "/videos/demo.mp4"
+  caption: "Optional caption"
+```
+
+**YouTube:**
+```yaml
+- type: "embed"
+  platform: "youtube"
+  url: "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+**X (Twitter):**
+```yaml
+- type: "embed"
+  platform: "x"
+  url: "https://x.com/username/status/TWEET_ID"
+```
+
+**Instagram:**
+```yaml
+- type: "embed"
+  platform: "instagram"
+  url: "https://www.instagram.com/p/POST_ID/"
+```
