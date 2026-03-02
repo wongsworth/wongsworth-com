@@ -9,8 +9,20 @@ interface EmbedInstagramProps {
 export default function EmbedInstagram({ url }: EmbedInstagramProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+
+  // Derive the embed URL (iframe-based, no external JS required)
+  let embedUrl = '';
+  try {
+    const parsed = new URL(url);
+    let path = parsed.pathname;
+    if (!path.endsWith('/')) {
+      path += '/';
+    }
+    embedUrl = `https://www.instagram.com${path}embed`;
+  } catch {
+    embedUrl = '';
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -21,7 +33,7 @@ export default function EmbedInstagram({ url }: EmbedInstagramProps) {
         }
       },
       {
-        rootMargin: '100px', // Start loading earlier
+        rootMargin: '100px',
       }
     );
 
@@ -32,45 +44,8 @@ export default function EmbedInstagram({ url }: EmbedInstagramProps) {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (isVisible) {
-      // Check if script already exists
-      const existingScript = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
-      
-      if (existingScript) {
-        // Script already loaded, just process the widget
-        if ((window as any).instgrm?.Embeds) {
-          (window as any).instgrm.Embeds.process();
-          setIsLoaded(true);
-        }
-      } else {
-        // Load the script
-        const script = document.createElement('script');
-        script.src = 'https://www.instagram.com/embed.js';
-        script.async = true;
-        script.onload = () => {
-          if ((window as any).instgrm?.Embeds) {
-            (window as any).instgrm.Embeds.process();
-          }
-          setIsLoaded(true);
-        };
-        script.onerror = () => setHasError(true);
-        document.body.appendChild(script);
-      }
-
-      // Set timeout fallback
-      const timeout = setTimeout(() => {
-        if (!isLoaded) {
-          setHasError(true);
-        }
-      }, 10000); // 10 second timeout
-
-      return () => clearTimeout(timeout);
-    }
-  }, [isVisible, isLoaded]);
-
-  // Error state - show accessible fallback
-  if (hasError) {
+  // Error state or invalid URL - show accessible fallback
+  if (hasError || !embedUrl) {
     return (
       <div className="my-6 w-full min-h-[500px] max-w-xl mx-auto bg-gray-100 rounded-lg flex flex-col items-center justify-center p-6 text-center border border-gray-200">
         <svg 
@@ -96,32 +71,16 @@ export default function EmbedInstagram({ url }: EmbedInstagramProps) {
 
   return (
     <div ref={ref} className="my-6">
-      {/* Reserved space prevents layout shift */}
       <div className="w-full min-h-[500px] max-w-xl mx-auto flex items-center justify-center">
         {isVisible ? (
-          <blockquote
-            className="instagram-media"
-            data-instgrm-captioned
-            data-instgrm-permalink={url}
-            data-instgrm-version="14"
-            style={{
-              background: '#FFF',
-              border: 0,
-              borderRadius: '3px',
-              boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
-              margin: '1px',
-              maxWidth: '540px',
-              minWidth: '326px',
-              padding: 0,
-              width: 'calc(100% - 2px)',
-            }}
-          >
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              View this post on Instagram
-            </a>
-          </blockquote>
+          <iframe
+            src={embedUrl}
+            className="w-full max-w-xl h-[600px] border-0 overflow-hidden"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            loading="lazy"
+            onError={() => setHasError(true)}
+          />
         ) : (
-          // Placeholder
           <div className="w-full min-h-[500px] max-w-xl bg-gray-100 rounded-lg flex flex-col items-center justify-center border border-gray-200">
             <svg 
               className="w-12 h-12 text-gray-400 mb-2 animate-pulse" 
@@ -135,7 +94,6 @@ export default function EmbedInstagram({ url }: EmbedInstagramProps) {
           </div>
         )}
       </div>
-      {/* Accessible fallback for no-JS */}
       <noscript>
         <a 
           href={url}
