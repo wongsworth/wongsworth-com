@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { ReactNode } from 'react';
 
 export interface ImageBlockProps {
   src: string;
@@ -7,6 +8,8 @@ export interface ImageBlockProps {
   priority?: boolean;
   aspectRatio?: 'video' | 'square' | 'portrait' | 'auto';
   className?: string;
+  /** When set, the image becomes a link to this URL (opens in new tab) */
+  href?: string;
 }
 
 /**
@@ -26,7 +29,20 @@ export default function ImageBlock({
   priority = false,
   aspectRatio = 'video',
   className = '',
+  href,
 }: ImageBlockProps) {
+  const linkProps = href
+    ? { href, target: '_blank' as const, rel: 'noopener noreferrer' }
+    : null;
+
+  const wrap = (content: ReactNode) =>
+    linkProps ? (
+      <a {...linkProps} className="block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 rounded-lg">
+        {content}
+      </a>
+    ) : (
+      content
+    );
   // Determine aspect ratio class
   const aspectClass = {
     video: 'aspect-video',      // 16:9
@@ -37,7 +53,7 @@ export default function ImageBlock({
 
   // For 'auto' aspect ratio, use uncontained layout with explicit dimensions
   if (aspectRatio === 'auto') {
-    return (
+    return wrap(
       <figure className={`my-6 ${className}`}>
         <div className="rounded-lg overflow-hidden bg-gray-100 shadow-sm">
           <Image
@@ -62,7 +78,7 @@ export default function ImageBlock({
     );
   }
 
-  return (
+  return wrap(
     <figure className={`my-6 ${className}`}>
       <div
         className={`relative w-full ${aspectClass} rounded-lg overflow-hidden bg-gray-100 shadow-sm`}
